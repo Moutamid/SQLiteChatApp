@@ -636,7 +636,7 @@ public class ConversationActivity extends AppCompatActivity {
         AlertDialog dialog;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ConversationActivity.this);
-        final CharSequence[] items = {"Edit", "Delete", "Share"};
+        final CharSequence[] items = {"Edit", "Delete", "Share", "View"};
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int position) {
@@ -657,11 +657,21 @@ public class ConversationActivity extends AppCompatActivity {
                     dbHandler.deleteMessage(messageModel.message);
                     Stash.put(MESSAGES, messagesModelArrayList);
                 }
+
                 if (position == 2) {//SHARE
                     if (messageModel.image.isEmpty()) {//SIMPLE MESSAGE
                         shareText(messageModel.message);
                     } else {// IMAGE MESSAGE
                         shareImage(messageModel.message, messageModel.image);
+                    }
+                    dialog.dismiss();
+                }
+
+                if (position == 3) {//View
+                    if (messageModel.image.isEmpty()) {//SIMPLE MESSAGE
+                        showTextMessage(messageModel.message);
+                    } else {// IMAGE MESSAGE
+                        showImageMessage(messageModel.message, messageModel.image);
                     }
                     dialog.dismiss();
                 }
@@ -671,6 +681,55 @@ public class ConversationActivity extends AppCompatActivity {
 
         dialog = builder.create();
         dialog.show();
+    }
+
+    private void showImageMessage(String message, String image) {
+        Dialog dialog = new Dialog(ConversationActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog);
+        dialog.setCancelable(true);
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        EditText editTextd = dialog.findViewById(R.id.edittextdialog);
+        ImageView imageView = dialog.findViewById(R.id.imagedialog);
+        AppCompatButton button = dialog.findViewById(R.id.sendBtndialog);
+        button.setVisibility(View.GONE);
+
+        Glide.with(getApplicationContext())
+                .load(image)
+                .error(R.color.red)
+                .placeholder(R.color.grey)
+                .into(imageView);
+        editTextd.setText(message);
+        editTextd.setEnabled(false);
+
+        dialog.show();
+        dialog.getWindow().setAttributes(layoutParams);
+    }
+
+    private void showTextMessage(String message) {
+        Dialog dialog = new Dialog(ConversationActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_edittext);
+        dialog.setCancelable(true);
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        EditText editTextd = dialog.findViewById(R.id.edittextsimpledialog);
+        AppCompatButton button = dialog.findViewById(R.id.sendBtnsimpledialog);
+
+        editTextd.setText(message);
+        editTextd.setEnabled(false);
+
+        button.setVisibility(View.GONE);
+
+        dialog.show();
+        dialog.getWindow().setAttributes(layoutParams);
     }
 
     private void editImageMessage(MessageModel messageModel, int position) {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select your favourite cartoon" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:checkedButton="@id/radioBtnDentist">
+
+        <RadioButton
+            android:id="@+id/radioBtnDentist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/darkorange"
+            android:text="Dentist" />
+
+        <RadioButton
+            android:id="@+id/radioBtnDinosaur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/darkorange"
+            android:text="Dinosaur" />
+
+
+        <RadioButton
+            android:id="@+id/radioBtnPirate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/darkorange"
+            android:text="Pirate" />
+
+
+        <RadioButton
+            android:id="@+id/radioBtnPrincess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/darkorange"
+            android:text="Princess" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/edittextdialognewchat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:hint="Enter chat name"
+        android:padding="10dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addBtndialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@color/yellow"
+        android:text="Add"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>
